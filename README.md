@@ -3,13 +3,16 @@ Exploratory data analytics portfolio case study
 
 Between February 2023, and October 2023, I delved into my Spotify streaming data to gain insights into my music listening behavior since joining the platform last year.
 Key Questions Explored:
+
 •	Total unique tracks and artists.
 •	Favorite track and artist of the year.
 •	Top 10 tracks and most streamed artists.
 •	Most streamed album and preferred streaming device.
 •	Timeline of streaming activity, including most active day and time.
 •	Usage of shuffle mode and skipped tracks.
+
 Data Overview: 
+
 I obtained my Spotify streaming history in JSON format and converted it to CSV using Excel. The dataset consists of 21 columns, including timestamps, user information, track details, and streaming metadata, outlined below
 •	Ts - Date and time of when the stream ended in UTC format (Coordinated Universal Time zone).
 •	Username – My Spotify username.
@@ -34,6 +37,7 @@ I obtained my Spotify streaming history in JSON format and converted it to CSV u
 •	Incognito_mode: null/true/false - Information whether the track was played during a private session.
 
 Cleaning Process: 
+
 I utilized SQL queries to clean and prepare the data for analysis, ensuring it suited my analytical needs and objectives.
 For a detailed summary of my findings and visualization of the analysis, please refer to the "my_spotify_case_study_analysis.sql" file 
 Click here to see Tableau dashboard to see my insights at a glance 
