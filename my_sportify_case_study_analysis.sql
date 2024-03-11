@@ -211,7 +211,7 @@ Limit 1;
 SELECT SUM(min_played) AS total_min_streamed
 FROM streaming_history.sportify_history_2023;
 
--- Most active day pf the week 
+-- Most active day of the week 
 -- Get day_of_week from date_played column 
 ALTER TABLE sportify_history_2023
 ADD COLUMN day_of_week VARCHAR(20) 
