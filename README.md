@@ -5,8 +5,11 @@ Between February 2023, and October 2023, I delved into my Spotify streaming data
 Key Questions Explored:
 
 •	Total unique tracks and artists.
+
 •	Favorite track and artist of the year.
+
 •	Top 10 tracks and most streamed artists.
+
 •	Most streamed album and preferred streaming device.
 •	Timeline of streaming activity, including most active day and time.
 •	Usage of shuffle mode and skipped tracks.
