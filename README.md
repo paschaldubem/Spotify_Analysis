@@ -1,5 +1,4 @@
-# Spotify_Analysis
-<p> Exploratory data analytics portfolio case study <br>
+# Exploratory Data Analysis of Spotify History
 Between February 2023 and October 2023, I delved into my Spotify streaming data to gain insights into my music listening behavior since joining the platform last year.</P> <br>
  <p> 
     <ul">
