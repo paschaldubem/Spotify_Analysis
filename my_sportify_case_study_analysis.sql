@@ -1,8 +1,11 @@
--- Exploratory data analysis of my sportify streaming data 
+-- EXPLORATORY DATA ANALYSIS OF MY SPOTIFY STREAMING DATA  
+
+-- Importing data 
+-- Initial view of imported dataset
 SELECT * 
 FROM streaming_history.my_sportify_streaming_audio_2023;
 
--- Verifying if dataset was uploaded correctly
+-- Verifying that downloaded number of fields tallies with that in the excel spreadsheet
 SELECT COUNT(*)
 FROM streaming_history.my_sportify_streaming_audio_2023;
 
@@ -25,17 +28,17 @@ FROM streaming_history.my_sportify_streaming_audio_2023;
 SELECT *
 FROM streaming_history.streaming_history;
 
--- Dropping redundant datasets
-DROP TABLE my_sportify_streaming_audio_2023;
-
 --  Reanaming table 
 RENAME TABLE streaming_history TO sportify_history_2023;
+
+-- Dropping redundant datasets
+DROP TABLE my_sportify_streaming_audio_2023;
 
 SELECT *
 FROM streaming_history.sportify_history_2023;
 
+-- Adding a new column as min_played
 -- 'msplayed' is in miliseconds and needs to be converted to minutes 
--- Adding a new column as minutes played
 ALTER TABLE sportify_history_2023
 	ADD min_played DECIMAL (5,2)
 AFTER platform;
@@ -52,7 +55,7 @@ DROP COLUMN ms_played;
 SELECT *
 FROM streaming_history.sportify_history_2023;
 
--- Adding new columns 'date' and 'time'
+-- Adding new columns 'date_played' and 'time_played'
 ALTER TABLE sportify_history_2023
 ADD date_played date
 AFTER ts;
@@ -60,16 +63,16 @@ ALTER TABLE sportify_history_2023
 ADD time_played time
 AFTER ts;
 
--- Converting data format for 'ts' from a text data format into one that can be recognized by MySQL
+-- Adding a new column "TS_NEW" with a data format timestamp recognized by MySQL
 ALTER TABLE sportify_history_2023
 ADD TS_NEW TIMESTAMP
 AFTER ts;
 
--- Updating TS with the converted values by converting the datatype from str to datetime
+-- Updating "TS_NEW" column with the converted values by transforming the datatype from STR to DATETIME
 UPDATE sportify_history_2023
 SET TS_NEW = STR_TO_DATE(ts, '%Y-%m-%dT%H:%i:%sZ');
 
--- Updating new columns with values from timestamp column
+-- Updating new columns 'date_played' and 'time_played' with values from "TS_NEW" column
 UPDATE sportify_history_2023
 SET 
 	date_played = DATE(TS_NEW),
@@ -89,16 +92,17 @@ RENAME COLUMN master_metadata_track_name TO track_name,
 RENAME COLUMN master_metadata_album_artist_name TO artist_name,
 RENAME COLUMN master_metadata_album_album_name TO album_name;
 
--- Verifying changes
-SELECT *
-FROM streaming_history.sportify_history_2023;
-
 -- Remove blanks or NULL values 
 DELETE FROM sportify_history_2023
 WHERE track_name IS NULL OR 
 	TRIM(track_name) = '';
+    
+-- Verifying changes
+SELECT *
+FROM streaming_history.sportify_history_2023;
 
--- Exploratory analysis of my streaming history
+
+-- EXPLORATORY DATA ANALYSIS USING SQL
 
 -- Total number of unique songs streamed
 SELECT COUNT(DISTINCT (track_name)) AS Total_unique_songs
@@ -106,6 +110,10 @@ FROM streaming_history.sportify_history_2023;
 
 -- Total number of songs streamed
 SELECT COUNT(track_name) AS Total_songs
+FROM streaming_history.sportify_history_2023;
+
+-- Total minutes streaming on spotify
+SELECT SUM(min_played) AS total_min_streamed
 FROM streaming_history.sportify_history_2023;
 
 -- Favorite track
@@ -116,7 +124,7 @@ GROUP BY track_name
 ORDER BY total_play_minutes DESC
 LIMIT 1;
 
--- Top 10 songs streamed by number of minutes played
+-- Top 10 songs streamed by total minutes played
 SELECT track_name,
 SUM(min_played) AS total_minutes_played
 FROM streaming_history.sportify_history_2023
@@ -124,7 +132,25 @@ GROUP BY track_name
 ORDER BY total_minutes_played DESC
 LIMIT 10;
 
--- Total number of artists listened to
+-- 10 top tracks I streamed completely the most times
+SELECT track_name,
+COUNT(*) AS track_done_freq
+FROM streaming_history.sportify_history_2023
+WHERE reason_end =  'trackdone'
+GROUP BY track_name
+ORDER BY track_done_freq DESC
+Limit 10;
+
+-- Top 10 most skipped tracks
+SELECT track_name,
+COUNT(*) AS skip_count
+FROM streaming_history.sportify_history_2023
+WHERE skipped = 'TRUE'
+GROUP BY track_name
+ORDER BY skip_count DESC
+Limit 10;
+
+-- Total number of artists streamed
 SELECT COUNT(artist_name) AS Total_artists
 FROM streaming_history.sportify_history_2023;
 
@@ -132,7 +158,7 @@ FROM streaming_history.sportify_history_2023;
 SELECT COUNT(DISTINCT(artist_name)) AS Unique_artists
 FROM streaming_history.sportify_history_2023;
 
--- Favorite artist by number of minutes their song was played
+-- Favorite artist by total minutes played
 SELECT artist_name,
 SUM(min_played) AS total_play_minutes
 FROM streaming_history.sportify_history_2023
@@ -140,7 +166,7 @@ GROUP  BY artist_name
 ORDER BY total_play_minutes DESC
 Limit 1;
 
--- Top 10 most streamed artsts 
+-- Top 10 artists by total minutes played
 SELECT artist_name,
 SUM(min_played) AS total_minutes_played
 FROM streaming_history.sportify_history_2023
@@ -173,24 +199,6 @@ GROUP BY album_name
 ORDER BY total_minutes_played DESC 
 Limit 10;
 
--- 10 top tracks I streamed completely the most time
-SELECT track_name,
-COUNT(*) AS track_done_freq
-FROM streaming_history.sportify_history_2023
-WHERE reason_end =  'trackdone'
-GROUP BY track_name
-ORDER BY track_done_freq DESC
-Limit 10;
-
--- Top 10 most skipped tracks
-SELECT track_name,
-COUNT(*) AS skip_count
-FROM streaming_history.sportify_history_2023
-WHERE skipped = 'TRUE'
-GROUP BY track_name
-ORDER BY skip_count DESC
-Limit 10;
-
 -- Most used platform/device by total_play_time
 SELECT platform,
 SUM(min_played) AS total_play_time
@@ -199,7 +207,7 @@ GROUP BY platform
 ORDER BY total_play_time DESC
 Limit 2;
 
--- Longest day streaming on spotify using min_played
+-- Peak streaming day on spotify using min_played
 SELECT date_played,
 	SUM(min_played) AS total_streamed_time
 FROM streaming_history.sportify_history_2023
@@ -207,11 +215,7 @@ GROUP BY date_played
 ORDER BY total_streamed_time DESC
 Limit 1;
 
--- Total number of minutes streamed
-SELECT SUM(min_played) AS total_min_streamed
-FROM streaming_history.sportify_history_2023;
-
--- Most active day of the week 
+-- Daily listening patterns
 -- Get day_of_week from date_played column 
 ALTER TABLE sportify_history_2023
 ADD COLUMN day_of_week VARCHAR(20) 
