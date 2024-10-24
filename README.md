@@ -422,15 +422,17 @@ In my visualizations, I employed various chart types, each selected for their ab
 
 *MILFORD SOUND* was my top track with 602.6 minutes streamed, followed closely by *WE LOVE PT2* WITH 519.3 minutes by the total minutes played metric. *WE LOVE PT1* takes the top spot under the frequency of completion metric.  Most of these top tracks were from the artist *Caye*, whose default genre is *POP* suggesting that pop was my dominant genre during the period.
 
+
 - TOP 10 ARTISTS: Similarly, I visualized my favorite artists by
 	- minutes played and
 	- track completion frequency.
 
  ![TOP 10 STREAMED ARTISTS](https://github.com/user-attachments/assets/5e1520fc-ce74-4dba-a474-497d627ed60c)
 
-![TOP 10 TRACKS BY FREQUENCY OF TRACK COMPLETION](https://github.com/user-attachments/assets/deda1555-0f36-4424-b922-915480418891)
+![TOP 10 ARTIST BY NUMBER OF COMPLETED STREAMS](https://github.com/user-attachments/assets/1aa33f4d-dcc7-4343-a907-4e2311833f7c)
 
 *Caye* again ranked highest, with 4,523 minutes played and 1270 respectively; *Justin Bieber* coming in second with 883 minutes played and 265 respectively with a majority of artists in the top 10 being pop artists, reinforcing my preference for *POP* music.
+
 
 - MOST STREAMED ALBUMS:  This is a bar chart representing my top 10 albums by total minutes played. The bars represent the albums and its corresponding height represents the total minutes spent playing the tracks it contains.
 
