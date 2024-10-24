@@ -4,7 +4,7 @@
 - [INTRODUCTION](#introduction)
 - [OBJECTIVES](#objectives)
 - [DATA COLLECTION AND PREPARATION](#data-collection-and-preparation)
-  - [DATA REQUEST AND EXTRAXCTION](#data-request-and-extraction)
+  - [DATA REQUEST AND EXTRACTION](#data-request-and-extraction)
   - [IMPORTING DATA INTO MySQL](#importing-data-into-mysql)
   - [DATA CLEANING AND TRANSFORMATION](#data-cleaning-and-transformation)
  - [EXPLORATORY DATA ANALYSIS USING MySQL](#exploratory-data-analysis-using-mysql)
