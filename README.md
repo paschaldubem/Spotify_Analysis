@@ -4,18 +4,13 @@
 - [INTRODUCTION](#introduction)
 - [OBJECTIVES](#objectives)
 - [DATA COLLECTION AND PREPARATION](#data-collection-and-preparation)
-  - [DATA REQUEST AND EXTRACTION](#data-request-and-extraction)
+  - [DATA SOURCE AND EXTRACTION](#data-source-and-extraction)
   - [IMPORTING DATA INTO MySQL](#importing-data-into-mysql)
   - [DATA CLEANING AND TRANSFORMATION](#data-cleaning-and-transformation)
  - [EXPLORATORY DATA ANALYSIS USING MySQL](#exploratory-data-analysis-using-mysql)
  - [DATA VISUALIZATION USING TABLEAU](#data-visualization-using-tableau)
  - [CONCLUSIONS](#conclusions)
  - [RECOMMENDATIONS](#recommendations)
-
-
-
-
-
 
 
 ## INTRODUCTION
