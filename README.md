@@ -122,7 +122,7 @@ Next, I dropped the now redundant *my_spotify_streaming_audio_2023* table, as it
 DROP TABLE my_sportify_streaming_audio_2023;
 ```
 
-Since the "ms_played" column was in milliseconds, I converted it to minutes for easier analysis. I added a new column, "min_played," with the converted data and dropped the redundant "ms_played" column. Afterward, I verified that the changes were applied correctly.
+Since the `ms_played` column was in milliseconds, I converted it to minutes for easier analysis. I added a new column, `min_played`, with the converted data and dropped the redundant `ms_played` column. Afterward, I verified that the changes were applied correctly.
 
 ```sql
 -- Adding a new column as min_played
@@ -144,7 +144,7 @@ SELECT *
 FROM streaming_history.sportify_history_2023;
 ```
 
-I also added two new columns, "date_played" and "time_played," to show the exact dates and times I streamed music
+I also added two new columns, `date_played` and `time_played`, to show the exact dates and times I streamed music
 
 ```sql
 -- Adding new columns 'date_played' and 'time_played'
@@ -156,7 +156,7 @@ ADD time_played time
 AFTER ts;
 ```
 
-MySQL incorrectly identified the "ts" column as a text format, so I created a new column, "TS_NEW," with the TIMESTAMP datatype to ensure proper identification and querying. I then populated it with the values from the "ts" column, converting them to the DATETIME format.
+MySQL incorrectly identified the `ts` column as a text format, so I created a new column, `TS_NEW`, with the TIMESTAMP datatype to ensure proper identification and querying. I then populated it with the values from the `ts` column, converting them to the DATETIME format.
 
 ```sql
 -- Adding a new column "TS_NEW" with a data format timestamp recognized by MySQL
@@ -169,7 +169,7 @@ UPDATE sportify_history_2023
 SET TS_NEW = STR_TO_DATE(ts, '%Y-%m-%dT%H:%i:%sZ');
 ```
 
-I updated the "date_played" and "time_played" columns with values extracted from the "TS_NEW" column to display exact streaming dates and times.
+I updated the `date_played` and `time_played` columns with values extracted from the `TS_NEW` column to display exact streaming dates and times.
 
 ```sql
 -- Updating new columns 'date_played' and 'time_played' with values from "TS_NEW" column
@@ -187,7 +187,7 @@ SELECT *
 FROM streaming_history.sportify_history_2023;
 ```
 
-I then dropped redundant columns, such as the "ts" column.
+I then dropped redundant columns, such as the `ts` column.
 
 ```sql
 -- Dropping redundant 'ts' column 
@@ -223,6 +223,180 @@ FROM streaming_history.sportify_history_2023;
 ```
 
 ## EXPLORATORY DATA ANALYSIS USING MySQL
+
+The purpose of this analysis is to better understand myself through my music choices, uncover hidden habits, and explore any potential relationships between music and my personality. My EDA begins with simple questions and expands into areas that I couldn't fully explore using SQL alone, utilizing Tableau for deeper insights. This process was both insightful and enjoyable, and I hope to demonstrate some its value here.
+
+Starting from my most obvious questions 
+
+- TOTAL UNIQUE SONGS STREAMED: Over the 9-month period, I queried the number of unique tracks to understand how many songs I have been exposed to since joining Spotify. This query aggregates by doing a count of all unique tracks in my historical data.
+
+```sql
+-- Total number of unique songs streamed
+SELECT COUNT(DISTINCT (track_name)) AS Total_unique_songs
+FROM streaming_history.sportify_history_2023;
+```
+
+This revealed that I listened to 2164 potentially new songs during the time I spent on the platform.
+
+- TOTAL MINUTES STREAMING ON SPOTIFY: I calculated the total time spent on Spotify over the 9 months, this query helps put this into perspective.
+
+```sql
+-- Total minutes streaming on spotify
+SELECT SUM(min_played) AS total_min_streamed
+FROM streaming_history.sportify_history_2023;
+```
+The query helps reveal the total time in 9 months I spent listening to music on spotify which was 37,948 minutes (about 27 days!
+
+- IDENTIFY TOP TRACKS: To identify the top songs streamed over this 9-month period, I discovered and used two criteria I felt held equal standing in giving insights into an accurate result.
+  
+  - By total minutes played: This ranks the tracks based on total time listened over the period
+ 
+```sql
+-- Top 10 songs streamed by total minutes played
+SELECT track_name,
+SUM(min_played) AS total_minutes_played
+FROM streaming_history.sportify_history_2023
+GROUP BY track_name
+ORDER BY total_minutes_played DESC
+LIMIT 10;
+```
+
+  - By frequency of completing the tracks `trackdone`: This shows how often I listened to a track all the way through without skipping.
+Spotify have a column named “reason for trackend” where any possible scenario leading to a track ending is recorded.
+
+```sql
+-- 10 top tracks I streamed completely the most times
+SELECT track_name,
+COUNT(*) AS track_done_freq
+FROM streaming_history.sportify_history_2023
+WHERE reason_end =  'trackdone'
+GROUP BY track_name
+ORDER BY track_done_freq DESC
+Limit 10;
+```
+
+These metrics highlight my favorite songs and reveal patterns I may not have noticed, like tracks I replay more often than I realized.
+
+- TOTAL UNIQUE ARTISTS STREAMED: To assess the diversity of my music choices, I calculated the total number of unique artists I’ve streamed. This helps to determine the number of artists ive streamed over this 9-month period.
+
+```sql
+-- Total unique artists streamed
+SELECT COUNT(DISTINCT(artist_name)) AS Unique_artists
+FROM streaming_history.sportify_history_2023;
+```
+
+This showed that I listened to and interacted with 1,078 unique artists on the platform.
+
+- TOP ARTISTS STREAMED: To identify the artists that were streamed the most frequently over the given period, two criteria were used:
+    - By total minutes played: This helped reveal the total time I spent listening to these artists over the given period. This query ranks artists by total minutes played
+ 
+```sql
+-- Top 10 artists by total minutes played
+SELECT artist_name,
+SUM(min_played) AS total_minutes_played
+FROM streaming_history.sportify_history_2023
+GROUP  BY artist_name
+ORDER BY total_minutes_played DESC
+Limit 10;
+```
+  - By frequency of completing the tracks `trackdone`: This reveals the number of times I fully listened to these artists songs without skipping over this same time period. Spotify has a column named “reason for trackend” where any possible scenario leading to their songs ending is recorded.
+
+```sql
+-- Top 10 artists whose songs I streamed completely the most times 
+SELECT artist_name,
+COUNT(*) AS track_done_freq
+FROM streaming_history.sportify_history_2023
+WHERE reason_end =  'trackdone'
+GROUP BY artist_name
+ORDER BY track_done_freq DESC
+Limit 10;
+```
+
+These queries will reveal which artists dominated my listening history, providing insights into my musical preferences. I discovered that certain artists were streamed far more frequently than others.
+
+- MOST STREAMED ALBUMS: I identified the albums I listened to the most, which also sheds light on my favorite collections of tracks and artists.
+
+```sql
+-- Most streamed album
+SELECT album_name,
+SUM(min_played) AS total_minutes_played
+FROM streaming_history.sportify_history_2023
+GROUP BY album_name
+ORDER BY total_minutes_played DESC 
+Limit 10;
+```
+
+This highlights my favorite albums, revealing the collective body of work I enjoyed the most.
+
+- PLATFOM USE DISTRIBUTION:  Since I stream Spotify on multiple devices, I wanted to determine which one I used most frequently.
+
+```sql
+-- Most used platform/device by total_play_time
+SELECT platform,
+SUM(min_played) AS total_play_time
+FROM streaming_history.sportify_history_2023
+GROUP BY platform
+ORDER BY total_play_time DESC
+Limit 2;
+```
+This reveals my preferred streaming device, indicating which is most convenient for me.
+
+- IDENTIFY PEAK LISTENING DAY: I wanted to discover the day when I listened to the most music and explore if it correlates with other metrics.
+
+```sql
+-- Peak streaming day on spotify using min_played
+SELECT date_played,
+	SUM(min_played) AS total_streamed_time
+FROM streaming_history.sportify_history_2023
+GROUP BY date_played
+ORDER BY total_streamed_time DESC
+Limit 1;
+```
+
+Understanding my peak streaming day may provide insight into significant events or activities that led to longer listening times.
+
+- DAILY LISTENING PATTERNS: I analyzed daily patterns to see if there are specific days when I tend to listen to more music. 
+
+```sql
+-- Daily listening patterns
+-- Get day_of_week from date_played column 
+ALTER TABLE sportify_history_2023
+ADD COLUMN day_of_week VARCHAR(20) 
+AFTER date_played;
+  
+UPDATE sportify_history_2023 
+SET day_of_week = DAYNAME(date_played);
+
+SELECT day_of_week,
+SUM(min_played) AS total_play_time
+FROM streaming_history.sportify_history_2023
+GROUP BY day_of_week
+ORDER BY total_play_time DESC;
+
+-- Most active times of the day
+SELECT time_played AS hour_of_day,
+SUM(min_played) AS total_min_played
+FROM streaming_history.sportify_history_2023
+GROUP BY hour_of_day
+ORDER BY total_min_played
+Limit 10;
+```
+
+This query will show if you listen to more music on weekends or weekdays, helping you understand your listening patterns throughout the week.
+SHUFFLING PREFERENCES: Lastly, I aimed to understand if I prefer to shuffle my playlist or listen to it sequentially.
+
+```sql
+-- Shuffle or no shuffle? based on how often I use the feature 
+SELECT shuffle,
+COUNT(*) AS shuffle_count
+FROM streaming_history.sportify_history_2023
+GROUP BY shuffle
+ORDER BY shuffle_count DESC
+Limit 2;
+```
+
+
+
 
 ## DATA VISUALIZATION USING TABLEAU
 
