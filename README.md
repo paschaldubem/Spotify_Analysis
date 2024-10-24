@@ -60,7 +60,9 @@ I appreciate Spotify's feature that lets users download their streaming history 
 -	Incognito_mode: null/true/false - Information whether the track was played during a private session.
 
 At first glance, the data was organized into a folder with multiple distinct datasets, each representing different aspects of my Spotify personal data. My primary focus was on the dataset containing my complete streaming history.
+
 As I reviewed the dataset, I identified several key columns that would be essential for answering my predefined questions and uncovering deeper insights. However, I also noticed a few columns that were irrelevant to my objectives, making them redundant for this analysis. 
+
 I noticed that a crucial column, *music genre*, was missing from the data. This column is essential as it categorizes the genre of every track I’ve listened to. While resolving this issue wasn’t impossible, it required sourcing the missing information from external resources.
 
 
@@ -68,7 +70,9 @@ I noticed that a crucial column, *music genre*, was missing from the data. This 
 
 Given the large size of the dataset, I chose MySQL as my primary tool for data cleaning and querying to extract insights. I created a schema named *streaming history* within MySQL workspace, imported the CSV file of the *my_spotify_streaming_audio_2023* dataset as a table using the Table data import wizard option for this purpose.
 
-The dataset was structured in a single table with 21 columns, capturing various aspects of my Spotify experience. To ensure that all the information from the original file was correctly imported, I wrote a query to view the data and verify its completeness. 
+To preview the summary of the queries i used in my analysis conducted using SQL [CLICK HERE]()
+
+The dataset had a single table with 21 columns, capturing my Spotify experience. I wrote a query to verify that all information was correctly imported from the original file.
 
 ``` sql
 -- Importing data 
@@ -85,6 +89,7 @@ SELECT COUNT(*)
 FROM streaming_history.my_sportify_streaming_audio_2023;
 ```
 
+To preview the summary of the queries i used in my analysis conducted using SQL [CLICK HERE]()
 
 ### DATA CLEANING AND TRANSFORMATION
 Cleaning and transforming my data are a prerequisite to my analysis process and is vital for its accuracy, efficiency, and its meaning. Without these steps, any conclusions drawn from the data could be unreliable or invalid at best.
@@ -226,9 +231,9 @@ FROM streaming_history.sportify_history_2023;
 
 The purpose of this analysis is to better understand myself through my music choices, uncover hidden habits, and explore any potential relationships between music and my personality. My EDA begins with simple questions and expands into areas that I couldn't fully explore using SQL alone, utilizing Tableau for deeper insights. This process was both insightful and enjoyable, and I hope to demonstrate some its value here.
 
-Starting from my most obvious questions 
+Some of the questions are
 
-- TOTAL UNIQUE SONGS STREAMED: Over the 9-month period, I queried the number of unique tracks to understand how many songs I have been exposed to since joining Spotify. This query aggregates by doing a count of all unique tracks in my historical data.
+- TOTAL UNIQUE TRACK STREAMED: Over the 9-month period, I queried the number of unique tracks to understand how many songs I have been exposed to since joining Spotify. This query aggregates by doing a count of all unique tracks in my historical data.
 
 ```sql
 -- Total number of unique songs streamed
@@ -250,6 +255,9 @@ The query helps reveal the total time in 9 months I spent listening to music on 
 - IDENTIFY TOP TRACKS: To identify the top songs streamed over this 9-month period, I discovered and used two criteria I felt held equal standing in giving insights into an accurate result.
   
   - By total minutes played: This ranks the tracks based on total time listened over the period
+    
+  -  By frequency of completing the tracks `trackdone`: This shows how often I listened to a track all the way through without skipping.
+Spotify have a column named “reason for trackend” where any possible scenario leading to a track ending is recorded.
  
 ```sql
 -- Top 10 songs streamed by total minutes played
@@ -259,12 +267,8 @@ FROM streaming_history.sportify_history_2023
 GROUP BY track_name
 ORDER BY total_minutes_played DESC
 LIMIT 10;
-```
 
-  - By frequency of completing the tracks `trackdone`: This shows how often I listened to a track all the way through without skipping.
-Spotify have a column named “reason for trackend” where any possible scenario leading to a track ending is recorded.
 
-```sql
 -- 10 top tracks I streamed completely the most times
 SELECT track_name,
 COUNT(*) AS track_done_freq
@@ -288,7 +292,9 @@ FROM streaming_history.sportify_history_2023;
 This showed that I listened to and interacted with 1,078 unique artists on the platform.
 
 - TOP ARTISTS STREAMED: To identify the artists that were streamed the most frequently over the given period, two criteria were used:
-    - By total minutes played: This helped reveal the total time I spent listening to these artists over the given period. This query ranks artists by total minutes played
+    - By total minutes played: This helped reveal the total time I spent listening to these artists over the given period. This query ranks artists by total minutes played.
+      
+    - By frequency of completing the tracks `trackdone`: This reveals the number of times I fully listened to these artists songs without skipping over this same time period. Spotify has a column named “reason for trackend” where any possible scenario leading to their songs ending is recorded.
  
 ```sql
 -- Top 10 artists by total minutes played
@@ -298,10 +304,8 @@ FROM streaming_history.sportify_history_2023
 GROUP  BY artist_name
 ORDER BY total_minutes_played DESC
 Limit 10;
-```
-  - By frequency of completing the tracks `trackdone`: This reveals the number of times I fully listened to these artists songs without skipping over this same time period. Spotify has a column named “reason for trackend” where any possible scenario leading to their songs ending is recorded.
 
-```sql
+
 -- Top 10 artists whose songs I streamed completely the most times 
 SELECT artist_name,
 COUNT(*) AS track_done_freq
@@ -383,7 +387,8 @@ Limit 10;
 ```
 
 This query will show if you listen to more music on weekends or weekdays, helping you understand your listening patterns throughout the week.
-SHUFFLING PREFERENCES: Lastly, I aimed to understand if I prefer to shuffle my playlist or listen to it sequentially.
+
+- SHUFFLING PREFERENCES: Lastly, I aimed to understand if I prefer to shuffle my playlist or listen to it sequentially.
 
 ```sql
 -- Shuffle or no shuffle? based on how often I use the feature 
@@ -395,15 +400,92 @@ ORDER BY shuffle_count DESC
 Limit 2;
 ```
 
-
+To preview the summary of the queries i used in my analysis conducted using SQL [CLICK HERE]()
 
 
 ## DATA VISUALIZATION USING TABLEAU
 
+Data visualizations tell compelling stories, are visually appealing, and most importantly, reveal insights that SQL queries alone may miss. This is why I chose Tableau—it highlights trends and patterns not immediately obvious in raw data or tables.
+
+In my visualizations, I employed various chart types, each selected for their ability to effectively communicate the insights I was aiming to uncover. Below are some key chart types and the insights they reveal:
+
+![INSIGHTS AT GLANCE ](https://github.com/user-attachments/assets/f98f603b-ce8d-475a-bfda-b7a145c65fd5)
+
+- TOP 10 TRACKS: This bar chart represents my top 10 tracks by two metrics
+ 	- total minutes played and
+    	- frequency of completion
+ 
+![TOP 10 STREAMED TRACKS](https://github.com/user-attachments/assets/1403b4e8-b1bf-4ecc-aab2-fc9c2b095044)
+	
+ 
+![TOP 10 TRACKS BY FREQUENCY OF TRACK COMPLETION](https://github.com/user-attachments/assets/04297900-768e-4eb7-b713-5bcfdf3eafeb)
+
+*MILFORD SOUND* was my top track with 602.6 minutes streamed, followed closely by *WE LOVE PT2* WITH 519.3 minutes by the total minutes played metric. *WE LOVE PT1* takes the top spot under the frequency of completion metric.  Most of these top tracks were from the artist *Caye*, whose default genre is *POP* suggesting that pop was my dominant genre during the period.
+
+- TOP 10 ARTISTS: Similarly, I visualized my favorite artists by
+	- minutes played and
+	- track completion frequency.
+
+ ![TOP 10 STREAMED ARTISTS](https://github.com/user-attachments/assets/5e1520fc-ce74-4dba-a474-497d627ed60c)
+
+![TOP 10 TRACKS BY FREQUENCY OF TRACK COMPLETION](https://github.com/user-attachments/assets/deda1555-0f36-4424-b922-915480418891)
+
+*Caye* again ranked highest, with 4,523 minutes played and 1270 respectively; *Justin Bieber* coming in second with 883 minutes played and 265 respectively with a majority of artists in the top 10 being pop artists, reinforcing my preference for *POP* music.
+
+- MOST STREAMED ALBUMS:  This is a bar chart representing my top 10 albums by total minutes played. The bars represent the albums and its corresponding height represents the total minutes spent playing the tracks it contains.
+
+ ![MOST STREAMED ALBUMS ](https://github.com/user-attachments/assets/55581280-3298-4a34-b536-0f6eea3ae620)
+
+*WE LOVE* album by *Caye* ranks the highest in this metric, with 3,908 minutes played, solidifying my earlier hypothesis made during my `top tracks` analysis, followed by *ENDS & BEGINS* by *Labrinth* with 723 minutes played. This implies that *POP* is indeed my favorite music genre with a mix of HipHop largely due to the *ENTERGALACTIC* album by *Kid Kuli* coming in 3rd with 698 minutes played.
+
+- HOURLY ACTIVITY TIMELINE: A bar chart showing my streaming activity across different hours of the day. It reveals that my listening peaks during the day, ranging from around 9 am in the mornings, then peaks at 1pm, 4pm before hitting its highest point at 7pm reflecting that I stream music mostly while working or during daily routines.
+ 
+![HOURLY ACTIVITY TIMELINE](https://github.com/user-attachments/assets/96622a15-7e7d-45d2-a26d-40ee1a125de6)
+
+
+- DAILY LISTENING PATTERNS: Another bar chart that highlights streaming activity by day of the week. Monday and Thursday saw the highest streaming activity with 6265 and 6179 minutes streamed respectively as I listen to music while I work, while Sunday had the lowest, likely because I take time off from work on that day. 
+
+ ![DAILY LISTENING PATTERNS ](https://github.com/user-attachments/assets/c1626e26-0946-4e05-a6fb-77b1d7799631)
+
+
+
+- SHUFFLING PREFERENCES: I used a pie chart to visualize my shuffling preferences. The data shows that I prefer listening to songs in shuffle mode, likely because I enjoy the unpredictability.
+
+![SHUFFLING PREFERNCE ](https://github.com/user-attachments/assets/b08bbd64-890c-4c33-ab1c-392a22c244e9)
+
+
+- REASONS FOR TRACK END IN PERCENTAGES:  The packed bubble displayed the different reasons spotify documented as to why a track would end represented by the different sized and colored bubbles and the frequencies that they occurred represented by the sizes of the different bubbles.
+
+![REASONS FOR TRACK END IN PERCENTAGES](https://github.com/user-attachments/assets/66c7f0b8-b4dd-44c6-a7cd-7456b4287386)
+
+
+I let songs play till completion 84.92% of the time, which means that I rarely interfere with the app once I start playing music or I put my songs on repeat a lot.
+
+For more visualizations and interactive dashbards in Tableau [CLICK HERE](https://public.tableau.com/app/profile/mgbecheta.paschal/viz/Myspotifyhistoryvisualization/INSIGHTSATGLANCE)
+ 
+
 ## CONCLUSIONS
+
+1. Analyzing my Spotify streaming data has been an eye-opening experience, challenging my assumptions and revealing new insights. While I’ve always known that I enjoy listening to music, I was unaware of just how much time I spend streaming. Tracking my habits for the first time has provided valuable clarity.
+  
+2. The most significant discovery was that pop music is my default favorite genre. I previously paid little attention to specific genres, focusing only on whether I liked a song or not. This newfound knowledge has been empowering. Additionally, I always thought of myself as an Ed Sheeran fan, but the data revealed that I listen to Caye far more often. This insight has made me rethink how I identify my favorite artists and songs.
+
+3. Another surprise was learning that I primarily stream music during the day, despite considering myself more nocturnal. The data shows that I tend to listen to music while working, building projects, or browsing the web, as it helps improve my concentration.
+
+4. Other interesting revelations include my tendency to listen to tracks in full, my preference for shuffling songs, and the fact that I mostly stream music from my laptop.
+
 
 ## RECOMMENDATIONS
 
+1. While Spotify’s AI already tailors my experience based on my music choices, as a data analyst, I recommend listening to more pop music from sub-genres like Afro Pop and Art Pop, as well as related genres such as rock and urban. This would add variety while staying aligned with my current preferences.
+
+2. Public playlists featuring a blend of these genres could also enhance the user experience
+
+3. It would be efficient to aggregate my most played or most repeated songs into a dedicated playlist for quick access.
+
+4. Using the “smart shuffle” feature rather than regular shuffle could enhance my music experience as spotify's algorithm would play only the most relevant and related tracks, introducing me to even more artists within my preferred genre. 
+
+5. Being able to listen to music offline would boost retention further because streaming music would no longer be solely determined by an internet connection.
 
 
 
@@ -426,6 +508,4 @@ Limit 2;
 
 
 
-                                                                      <p>       
-<a href="https://public.tableau.com/app/profile/mgbecheta.paschal/viz/SPOTIFYSTREAMINGHISTORYDASHBOARD/Dashboard3?publish=yes" target="_blank">Click Here </a> to see Tableau dashboard for my insights at a glance 
- <p> 
+   
