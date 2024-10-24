@@ -412,8 +412,8 @@ In my visualizations, I employed various chart types, each selected for their ab
 ![INSIGHTS AT GLANCE ](https://github.com/user-attachments/assets/f98f603b-ce8d-475a-bfda-b7a145c65fd5)
 
 - TOP 10 TRACKS: This bar chart represents my top 10 tracks by two metrics
- 	- total minutes played and
-    	- frequency of completion
+	- total minutes played and
+	- frequency of completion
  
 ![TOP 10 STREAMED TRACKS](https://github.com/user-attachments/assets/1403b4e8-b1bf-4ecc-aab2-fc9c2b095044)
 	
