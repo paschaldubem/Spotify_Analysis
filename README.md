@@ -89,7 +89,6 @@ SELECT COUNT(*)
 FROM streaming_history.my_sportify_streaming_audio_2023;
 ```
 
-To preview the summary of the queries i used in my analysis conducted using SQL [CLICK HERE]()
 
 ### DATA CLEANING AND TRANSFORMATION
 Cleaning and transforming my data are a prerequisite to my analysis process and is vital for its accuracy, efficiency, and its meaning. Without these steps, any conclusions drawn from the data could be unreliable or invalid at best.
