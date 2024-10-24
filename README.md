@@ -399,7 +399,7 @@ ORDER BY shuffle_count DESC
 Limit 2;
 ```
 
-To preview the summary of the queries i used in my analysis conducted using SQL [CLICK HERE]()
+
 
 
 ## DATA VISUALIZATION USING TABLEAU
