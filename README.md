@@ -70,7 +70,7 @@ I noticed that a crucial column, *music genre*, was missing from the data. This 
 
 Given the large size of the dataset, I chose MySQL as my primary tool for data cleaning and querying to extract insights. I created a schema named *streaming history* within MySQL workspace, imported the CSV file of the *my_spotify_streaming_audio_2023* dataset as a table using the Table data import wizard option for this purpose.
 
-To preview the summary of the queries i used in my analysis conducted using SQL [CLICK HERE]()
+To preview the summary of the queries i used in my analysis conducted using SQL [CLICK HERE](https://github.com/paschaldubem/Spotify_Analysis/blob/main/my_sportify_case_study_analysis.sql)
 
 The dataset had a single table with 21 columns, capturing my Spotify experience. I wrote a query to verify that all information was correctly imported from the original file.
 
