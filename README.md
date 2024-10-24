@@ -487,6 +487,7 @@ Analyzing my Spotify streaming data has been an eye-opening experience, challeng
 4. Using the “smart shuffle” feature rather than regular shuffle could enhance my music experience as spotify's algorithm would play only the most relevant and related tracks, introducing me to even more artists within my preferred genre. 
 
 5. Being able to listen to music offline would boost retention further because streaming music would no longer be solely determined by an internet connection.
+6. Finally, further analysis should explore the influence of external factors like mood or exercise on my music choices, providing deeper insights into my listening habits.
 
 
 
