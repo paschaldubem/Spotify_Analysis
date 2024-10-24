@@ -466,13 +466,13 @@ For more visualizations and interactive dashbards in Tableau [CLICK HERE](https:
 
 ## CONCLUSIONS
 
-1. Analyzing my Spotify streaming data has been an eye-opening experience, challenging my assumptions and revealing new insights. While I’ve always known that I enjoy listening to music, I was unaware of just how much time I spend streaming. Tracking my habits for the first time has provided valuable clarity.
+Analyzing my Spotify streaming data has been an eye-opening experience, challenging my assumptions and revealing new insights. While I’ve always known that I enjoy listening to music, I was unaware of just how much time I spend streaming. Tracking my habits for the first time has provided valuable clarity.
   
-2. The most significant discovery was that pop music is my default favorite genre. I previously paid little attention to specific genres, focusing only on whether I liked a song or not. This newfound knowledge has been empowering. Additionally, I always thought of myself as an Ed Sheeran fan, but the data revealed that I listen to Caye far more often. This insight has made me rethink how I identify my favorite artists and songs.
+1. The most significant discovery was that pop music is my default favorite genre. I previously paid little attention to specific genres, focusing only on whether I liked a song or not. This newfound knowledge has been empowering. Additionally, I always thought of myself as an Ed Sheeran fan, but the data revealed that I listen to Caye far more often. This insight has made me rethink how I identify my favorite artists and songs.
 
-3. Another surprise was learning that I primarily stream music during the day, despite considering myself more nocturnal. The data shows that I tend to listen to music while working, building projects, or browsing the web, as it helps improve my concentration.
+2. Another surprise was learning that I primarily stream music during the day, despite considering myself more nocturnal. The data shows that I tend to listen to music while working, building projects, or browsing the web, as it helps improve my concentration.
 
-4. Other interesting revelations include my tendency to listen to tracks in full, my preference for shuffling songs, and the fact that I mostly stream music from my laptop.
+3. Other interesting revelations include my tendency to listen to tracks in full, my preference for shuffling songs, and the fact that I mostly stream music from my laptop.
 
 
 ## RECOMMENDATIONS
